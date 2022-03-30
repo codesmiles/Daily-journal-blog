@@ -19,6 +19,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // render the eJS home template file
+
 app.get("/", function (req, res) { 
   res.render("home", { startingContent: homeStartingContent });
 });
