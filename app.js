@@ -19,13 +19,19 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // render the eJS home template file
-
 app.get("/", function (req, res) { 
   res.render("home", { startingContent: homeStartingContent });
 });
 
+// about page route
+app.get("/about", function (req, res) { 
+  res.render("about", { aboutContent: aboutContent });
+});
 
-
+// contact page route
+app.get("/contact", function (req, res) { 
+  res.render("contact", { contactContent: contactContent });
+});
 
 app.listen(3000, function () {
   console.log("Server started on port 3000");
