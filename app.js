@@ -33,6 +33,16 @@ app.get("/contact", function (req, res) {
   res.render("contact", { contactContent: contactContent });
 });
 
+// compose page
+app.get("/compose", (req,res) => {
+  res.render("compose")
+})
+app.post("/compose", (req, res)=> {
+  const newPost = req.body.newPost;
+
+  console.log(newPost);
+})
+
 
 
 const port = process.env.PORT;
