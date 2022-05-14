@@ -38,9 +38,9 @@ app.get("/compose", (req,res) => {
   res.render("compose")
 })
 app.post("/compose", (req, res)=> {
-  const newPost = req.body.newPost;
+  const newTitle = req.body.newTitle;
 
-  console.log(newPost);
+  console.log(newTitle);
 })
 
 
