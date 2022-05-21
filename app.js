@@ -23,7 +23,7 @@ const newPosts = [];
 
 // render the eJS home template file
 app.get(`/`, function (req, res) {
-  res.render("home", { startingContent: homeStartingContent, posts:newPosts });
+  res.render("home", { startingContent: homeStartingContent, posts: newPosts });
 });
 
 // about page route
@@ -49,12 +49,22 @@ app.post("/compose", (req, res) => {
 
   // push to new posts
   newPosts.push(post);
-  
+
   // log the title on the console
-  
+
   res.redirect("/");
 });
 
+// routing parameters
+app.get("/posts/:postTitle", (req, res) => {
+  const requestedTitle = req.params.postTitle;
+  
+  newPosts.forEach((post) => {
+    post.title === requestedTitle
+      ? console.log(`match Found`)
+      : console.log(`no match found`);
+  });
+});
 
 const port = process.env.PORT;
 
