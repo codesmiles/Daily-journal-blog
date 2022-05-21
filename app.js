@@ -18,35 +18,46 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
+// GLOBAL ARRY VARIABLE FOR POSTS
+const newPosts = [];
+
 // render the eJS home template file
-app.get(`/`, function (req, res) { 
-  res.render("home", { startingContent: homeStartingContent });
+app.get(`/`, function (req, res) {
+  res.render("home", { startingContent: homeStartingContent, posts:newPosts });
 });
 
 // about page route
-app.get("/about", function (req, res) { 
+app.get("/about", function (req, res) {
   res.render("about", { aboutContent: aboutContent });
 });
 
 // contact page route
-app.get("/contact", function (req, res) { 
+app.get("/contact", function (req, res) {
   res.render("contact", { contactContent: contactContent });
 });
 
 // compose page
-app.get("/compose", (req,res) => {
-  res.render("compose")
-})
-app.post("/compose", (req, res)=> {
-  const newTitle = req.body.newTitle;
+app.get("/compose", (req, res) => {
+  res.render("compose");
+});
+app.post("/compose", (req, res) => {
+  //creating a js object for the post request
+  const post = {
+    title: req.body.newTitle,
+    content: req.body.newContent,
+  };
 
-  console.log(newTitle);
-})
-
+  // push to new posts
+  newPosts.push(post);
+  
+  // log the title on the console
+  
+  res.redirect("/");
+});
 
 
 const port = process.env.PORT;
 
-app.listen(port||3000, function () {
+app.listen(port || 3000, function () {
   console.log("Server started on port 3000");
 });
