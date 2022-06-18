@@ -5,9 +5,11 @@
 
 
 <% posts.forEach(el => { %>
-<div class="item">
+
+    <div class="item">
     <h2><%= el.title %></h2>
-    <p><%= el.content %></p>
+    <p><%= el.content.substring(0,100) + `...`%> 
+    <a href="/posts/<%=el.title%>">read more</a></p>
 </div>
 
 <% }); %>
