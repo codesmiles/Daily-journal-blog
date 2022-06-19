@@ -28,7 +28,6 @@ mongoose.connect(url, function (err) {
   }
   console.log(`Connected to MongoDB`);
 });
-
 // --------------------------------------------
 
 // render the eJS home template file
@@ -57,14 +56,12 @@ app.get("/compose", (req, res) => {
   res.render("compose");
 });
 app.post("/compose", (req, res) => {
-  //creating a js object for the post request
-  const post = {
+  const post = {//creating a js object for the post request
     title: req.body.newTitle,
     content: req.body.newContent,
   };
-  // save to mongoDB
   const insertNews =new NewsLetterSchema(post);
-  insertNews.save((err, newData)=>{
+  insertNews.save((err, newData)=>{ // save to mongoDB
     if(err){
       console.log(err);
     }
