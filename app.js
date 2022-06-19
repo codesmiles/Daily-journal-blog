@@ -75,18 +75,14 @@ app.post("/compose", (req, res) => {
 });
 
 // routing parameters with spoiles of lodash
-app.get("/posts/:postTitle", (req, res) => {
-  const requestedTitle = _.lowerCase(req.params.postTitle);
-
-  newPosts.forEach((post) => {
-    const storedTitle = _.lowerCase(post.title);
-    if (storedTitle === requestedTitle) {
-      res.render("post", {
-        postTitle: post.title,
-        postContent: post.content,
-      });
-    }
-  });
+app.get("/posts/:postId", async(req, res) => {
+  const reqId  = req.params.postId;
+  const news = await NewsLetterSchema.findOne({ _id: reqId })
+  res.render("post", {
+    postTitle: news.title,
+    postContent: news.content,
+  })
+ 
 });
 
 ;
