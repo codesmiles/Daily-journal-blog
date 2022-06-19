@@ -19,9 +19,6 @@ app.set("view engine", "ejs");
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
-// GLOBAL ARRY VARIABLE FOR POSTS
-const newPosts = []; //OLD WAY
-
 // SET UP MONGOOSE CONNECTION------------------
 const url = `mongodb://localhost:27017/clientLocation`;
 // connect to mongoose
@@ -35,11 +32,14 @@ mongoose.connect(url, function (err) {
 // --------------------------------------------
 
 // render the eJS home template file
-app.get(`/`, function (req, res) {
-  res.render("home", {
-    startingContent: homeStartingContent,
-    posts: newPosts,
-  });
+app.get(`/`,  async(req, res) =>{
+  
+    const allPosts = await NewsLetterSchema.find({});
+    res.render("home", {
+      startingContent: homeStartingContent,
+      posts: allPosts
+    })
+  
 });
 
 // about page route
@@ -62,10 +62,6 @@ app.post("/compose", (req, res) => {
     title: req.body.newTitle,
     content: req.body.newContent,
   };
-
-  // push to new posts
-  // newPosts.push(post); THIS IS THE OLD WAY
-
   // save to mongoDB
   const insertNews =new NewsLetterSchema(post);
   insertNews.save((err, newData)=>{
@@ -92,6 +88,8 @@ app.get("/posts/:postTitle", (req, res) => {
     }
   });
 });
+
+;
 
 const port = process.env.PORT || 3000;
 
